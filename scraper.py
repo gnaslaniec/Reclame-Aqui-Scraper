@@ -13,7 +13,7 @@ from gravador import gravador_csv, gravador_txt, gravador_bd
 url_base = 'https://www.reclameaqui.com.br/indices/lista_reclamacoes/?id={}&size=10&page=1&status=ALL'
 
 
-def url_collector(driver, file, id_page, pages, file_type):
+def url_collector(driver, file, id_page, pages):
     nome = file
     if not os.path.exists('Arquivos'):
         os.mkdir('Arquivos')
@@ -53,7 +53,7 @@ def url_collector(driver, file, id_page, pages, file_type):
     return nome
 
 
-def scraper(driver, nome, file_type, id_page):
+def scraper(driver, nome, id_page):
     '''with open('Arquivos\\{}_urls.txt'.format(nome)) as arquivo_urls:
             valores = arquivo_urls.read()
             urls = valores.split()'''
