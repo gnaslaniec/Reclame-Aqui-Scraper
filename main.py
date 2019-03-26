@@ -16,10 +16,10 @@ def main():
     id_page = args.id
     pages = args.pages
 
-    file_type = 'bd'
+    
     
     coletor = url_collector(driver, file, id_page, pages, file_type)
-    scraper(driver, coletor, file_type, id_page)
+    scraper(driver, coletor, id_page)
     driver.quit()
 
 
