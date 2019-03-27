@@ -1,9 +1,9 @@
 # Reclame-Aqui-Scraper
 Scraper escrito em Python para o site Reclame Aqui.
 
-### Prerequisites
+### Pré-requisitos
 
-Os únicos requisistos são o Python na versão 3+ e instalar a biblioteca Selenium.
+Os requisistos são o Python na versão 3+ , instalar a biblioteca Selenium, e o executável do Chromedriver ou Geckodriver.
 
 ```bash
 $ pip install selenium
