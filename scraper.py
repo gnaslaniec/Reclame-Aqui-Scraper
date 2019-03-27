@@ -6,9 +6,10 @@ import time
 import os
 import re
 import sqlite3
+import datetime
 
 from editor_tempo import arrendonda_hora
-from gravador import gravador_csv, gravador_txt, gravador_bd
+from gravador import gravador_csv, gravador_bd
 
 url_base = 'https://www.reclameaqui.com.br/indices/lista_reclamacoes/?id={}&size=10&page=1&status=ALL'
 
@@ -17,8 +18,8 @@ def url_collector(driver, file, id_page, pages):
     nome = file
     if not os.path.exists('Arquivos'):
         os.mkdir('Arquivos')
-    if os.path.exists('Arquivos/{}_urls.txt'.format(nome)):
-        print('Arquivo com os links já existe!')
+    if os.path.exists('Arquivos/{}_log.txt'.format(id_page)):
+        print('Já foram coletados os link para o ID: {}'.format(id_page))
         pass
     else:
         print('\n', nome, '\n')
@@ -54,10 +55,6 @@ def url_collector(driver, file, id_page, pages):
 
 
 def scraper(driver, nome, id_page):
-    '''with open('Arquivos\\{}_urls.txt'.format(nome)) as arquivo_urls:
-            valores = arquivo_urls.read()
-            urls = valores.split()'''
-  
     conn = sqlite3.connect('Database/coleta.db')
     cursor = conn.cursor()
         
@@ -138,12 +135,16 @@ def scraper(driver, nome, id_page):
                 sql_status = 'UPDATE links set status = 1 where url = ? and page_id = ?;'
                 cursor.execute(sql_status, (url,id_page))
                 conn.commit()
+                with open('Arquivos/{}_log.txt'.format(id_page), 'a', encoding='utf8') as logfile:
+                    logfile.writelines('\n{} URL:{} OK'.format(datetime.datetime.now(), url))
                 time.sleep(2)
-            except TimeoutException:
+            except TimeoutException as e:
                 print('Não foi possível acessar a reclamação, indo para próxima...\n')
                 sql_status = 'UPDATE links set status = 3 where url = ? and page_id = ?;'
                 cursor.execute(sql_status, (url,id_page))
                 conn.commit()
+                with open('Arquivos/{}_log.txt'.format(id_page), 'a', encoding='utf8') as logfile:
+                    logfile.writelines('\n{} URL:{} EXCEPTION {}'.format(datetime.datetime.now(), url, e))
                 pass
 
     print('Coleta concluida! Nome do arquivo: {}_detalhado'.format(nome))

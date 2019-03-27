@@ -3,6 +3,9 @@ from scraper import url_collector, scraper
 from arguments import arguments
 
 
+# FEITO POR GABRIEL NASLANIEC
+
+
 def main():
     args = arguments()
     browser = args.browser
@@ -16,9 +19,7 @@ def main():
     id_page = args.id
     pages = args.pages
 
-    
-    
-    coletor = url_collector(driver, file, id_page, pages, file_type)
+    coletor = url_collector(driver, file, id_page, pages)
     scraper(driver, coletor, id_page)
     driver.quit()
 

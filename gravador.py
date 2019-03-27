@@ -24,22 +24,16 @@ def gravador_bd(url_texto, url_id):
             VALUES (?, ?, ?);
             ''', (link, 0, url_id))
     conn.commit()
-    
 
-'''def gravador_txt(url_texto, nome):
-    if not os.path.exists('Arquivos'):
-        os.makedirs('Arquivos')
+    with open('Arquivos/{}_log.txt'.format(url_id), 'a', encoding='utf8') as logfile:
+        logfile.writelines('URL_ID:{}'.format(url_id))
     
-    for link in url_texto:
-        with open('Arquivos\\{}_urls.txt'.format(nome), 'a', encoding="utf8") as arquivo:
-            arquivo.writelines(link + '\n')'''
-  
 
 def gravador_csv(lista, nome):
-    with open('Arquivos\\{}_detalhado.csv'.format(nome),
+    with open('Arquivos\\{}.csv'.format(nome),
               'a', encoding='utf8', newline='') as arquivo_csv:
         gravador = csv.writer(arquivo_csv)
-        file_is_empty = os.stat('Arquivos\\{}_detalhado.csv'.format(nome)).st_size == 0
+        file_is_empty = os.stat('Arquivos\\{}.csv'.format(nome)).st_size == 0
         dados = ['titulo', 'texto', 'status', 'local', 'data',
                  'categoria_1', 'categoria_2', 'categoria_3',
                  'url_reclamacao']
