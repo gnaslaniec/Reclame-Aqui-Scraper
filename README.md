@@ -1,5 +1,5 @@
 # Reclame Aqui Scraper
-Scraper escrito em Python para o site Reclame Aqui.
+Scraper escrito em Python para o site Reclame Aqui, que permite coletar a url, a reclamação em si, o status, data e local.
 
 ### Pré-requisitos
 
