@@ -3,7 +3,7 @@ Scraper escrito em Python para o site Reclame Aqui.
 
 ### Pré-requisitos
 
-Os requisistos são o Python na versão 3+ , instalar a biblioteca Selenium, e o executável do Chromedriver ou Geckodriver.
+Os requisistos são o Python na versão 3+ , instalar a biblioteca Selenium, e o executável do Chromedriver ou Geckodriver nas variáveis do sistema.
 
 ```bash
 $ pip install selenium
@@ -15,7 +15,7 @@ $ python reclame_aqui_scraper.py -i <ID da página> -p <Quantidade de páginas> 
 ```
 ### Argumentos
 <pre>
--i --id       Para verificar o ID da página basta ir até a URL da reclamação e copiar os números após o valor 'id': https://www.reclameaqui.com.br/indices/lista_reclamacoes/?id=<b>1111</b>&page=1&size=10&status=ALL
+-i --id       Nome da página que se encontra na url da empresa no ReclameAqui. Ex.: "livraria-cultura" , "spotify", "magazine-luiza-loja-online" (inserir o nome sem aspas)
 
 -p --pages    Número de páginas em que serão coletadas as reclamações. Ex.: '10' irá coletar reclamações da 10 primeiras páginas.
 
