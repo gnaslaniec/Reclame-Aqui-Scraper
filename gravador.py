@@ -3,13 +3,16 @@ import os
 import sqlite3
 
 
-def gravador_bd(url_texto, url_id):
+def db_conn():
     if not os.path.exists('Database'):
         os.mkdir('Database')
     
     conn = sqlite3.connect('Database/coleta.db')
     cursor = conn.cursor()
 
+    return conn, cursor
+
+def gravador_bd(url_texto, url_id, conn, cursor):
     cursor.execute('''
             CREATE TABLE IF NOT EXISTS links (
                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
