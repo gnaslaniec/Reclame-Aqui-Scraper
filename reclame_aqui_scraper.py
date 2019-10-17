@@ -1,4 +1,4 @@
-from utils import driver_chrome, driver_firefox, arguments
+from utils import driver_chrome, driver_firefox, arguments, db_conn
 from scraper import url_collector, scraper
 
 # FEITO POR GABRIEL NASLANIEC
@@ -16,8 +16,10 @@ def main():
     id_page = args.id
     pages = args.pages
 
-    coletor = url_collector(driver, file, id_page, pages)
-    scraper(driver, coletor, id_page)
+    conn, cursor = db_conn()
+
+    coletor = url_collector(driver, file, id_page, pages, conn, cursor)
+    scraper(driver, coletor, id_page, conn, cursor)
     driver.quit()
 
 
