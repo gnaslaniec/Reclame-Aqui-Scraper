@@ -3,7 +3,7 @@ Scraper escrito em Python para o site Reclame Aqui, que permite coletar a url, a
 
 ### Pré-requisitos
 
-Os requisistos são o Python na versão 3+ , instalar a biblioteca Selenium, e o executável do Chromedriver ou Geckodriver nas variáveis do sistema.
+Os requisistos são o Python na versão 3+ , Firefox na versão 69 ou Google Chrome na versão 77, e instalar a biblioteca Selenium com o seguinte comando:
 
 ```bash
 $ pip install selenium
