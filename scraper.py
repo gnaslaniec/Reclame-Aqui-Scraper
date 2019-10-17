@@ -9,8 +9,7 @@ import re
 import sqlite3
 import datetime
 
-from editor_tempo import arrendonda_hora
-from gravador import gravador_csv, gravador_bd, db_conn
+from utils import gravador_csv, gravador_bd, db_conn, arrendonda_hora
 
 url_base = 'https://www.reclameaqui.com.br/empresa/{}/lista-reclamacoes/?pagina=1'
 
@@ -68,43 +67,36 @@ def scraper(driver, nome, id_page, conn, cursor):
                 url_str = str(url)
                 url = url_str.replace("(", "").replace(")", "").replace("'", "").replace(",", "")
                 driver.get(url)
-                WebDriverWait(driver, 15).until(
-                    lambda x: x.find_element_by_xpath('//*[@id="complain-detail"]'
-                                                      '/div/div[1]/div[2]/div/div[1]'
-                                                      '/div[2]/div[1]/ul[1]/li[1]'))
+                WebDriverWait(driver, 15).until(lambda x: x.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div'))
                 print('Acessando: {}'.format(url[30:]))
                 time.sleep(2)
 
                 print('Iniciando!')
-
-                texto = driver.find_element_by_xpath('//*[@id="complain-detail"]'
-                                                     '/div/div[1]/div[2]/div/div[2]/p')
-                titulo = driver.find_element_by_xpath('//*[@id="complain-detail"]'
-                                                      '/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/h1')
-                local = driver.find_element_by_xpath('//*[@id="complain-detail"]'
-                                                     '/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[1]')
-                data_hora = driver.find_element_by_xpath('//*[@id="complain-detail"]'
-                                                         '/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[3]')
+                
+                texto = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[2]/p')
+                titulo = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/h1')
+                local = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[1]/li[1]')
+                data_hora = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[1]/li[3]')
                 status = driver.find_element_by_xpath(
-                    '/html/body/ui-view/div[3]/div/div/div[2]/div/div[1]/div[2]/div[2]/div/span/img')
+                    '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[2]/div/span/img')
 
                 try:
                     categoria1 = driver.find_element_by_xpath(
-                        '//*[@id="complain-detail"]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[1]')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[1]/a')
                     problem_type = categoria1.text
                 except NoSuchElementException:
                     problem_type = '--'
 
                 try:
                     categoria2 = driver.find_element_by_xpath(
-                        '//*[@id="complain-detail"]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[2]')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[2]/a')
                     product_type = categoria2.text
                 except NoSuchElementException:
                     product_type = '--'
 
                 try:
                     categoria3 = driver.find_element_by_xpath(
-                        '//*[@id="complain-detail"]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[3]')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[3]/a')
                     category = categoria3.text
                 except NoSuchElementException:
                     category = '--'

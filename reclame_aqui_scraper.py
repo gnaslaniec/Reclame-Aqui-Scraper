@@ -1,10 +1,7 @@
-from selenium_driver import driver_chrome, driver_firefox
+from utils import driver_chrome, driver_firefox, arguments
 from scraper import url_collector, scraper
-from arguments import arguments
-
 
 # FEITO POR GABRIEL NASLANIEC
-
 
 def main():
     args = arguments()
