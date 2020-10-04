@@ -73,30 +73,29 @@ def scraper(driver, nome, id_page, conn, cursor):
 
                 print('Iniciando!')
                 
-                texto = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[2]/p')
-                titulo = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/h1')
-                local = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[1]/li[1]')
-                data_hora = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[1]/li[3]')
-                status = driver.find_element_by_xpath(
-                    '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[2]/div/span/img')
+                texto = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[2]/p')
+                titulo = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/h1')
+                local = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[1]')
+                data_hora = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[3]')
+                status = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/span/img')
 
                 try:
                     categoria1 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[1]/a')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[1]/a')
                     problem_type = categoria1.text
                 except NoSuchElementException:
                     problem_type = '--'
 
                 try:
                     categoria2 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[2]/a')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[2]/a')
                     product_type = categoria2.text
                 except NoSuchElementException:
                     product_type = '--'
 
                 try:
                     categoria3 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[1]/div/div[1]/div[2]/div[1]/ul[2]/li[3]/a')
+                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[3]/a')
                     category = categoria3.text
                 except NoSuchElementException:
                     category = '--'
@@ -105,11 +104,11 @@ def scraper(driver, nome, id_page, conn, cursor):
                 hora = arrendonda_hora(hora)
 
                 print('Titulo: {}'.format(titulo.text))
-                # print('Texto: {}'.format(texto.text))
-                # print(local.text)
-                # print(data.text)
-                # print(status.text)
-                # print('\n')
+                print('Texto: {}'.format(texto.text))
+                print(local.text)
+                print(data_hora.text)
+                print(status.text)
+                print('\n')
 
                 lista = zip([titulo.text], [texto.text],
                             [status.get_attribute("title")], [local.text],
