@@ -6,10 +6,9 @@ from selenium.common.exceptions import TimeoutException
 import time
 import os
 import re
-import sqlite3
 import datetime
 
-from utils import gravador_csv, gravador_bd, db_conn, arrendonda_hora
+from utils import gravador_csv, gravador_bd, arrendonda_hora
 
 url_base = 'https://www.reclameaqui.com.br/empresa/{}/lista-reclamacoes/?pagina=1'
 
@@ -38,7 +37,6 @@ def url_collector(driver, file, id_page, pages, conn, cursor):
             time.sleep(5)
             #url_pg = driver.find_elements_by_xpath("//div[@class='link-complain-id-complains']")
             url_pg = driver.find_elements_by_css_selector("a.link-complain-id-complains")
-            print('\nurl')
             for u in url_pg:
                 print(u.get_attribute('href'))
                 url_texto.append(u.get_attribute('href'))
@@ -67,35 +65,35 @@ def scraper(driver, nome, id_page, conn, cursor):
                 url_str = str(url)
                 url = url_str.replace("(", "").replace(")", "").replace("'", "").replace(",", "")
                 driver.get(url)
-                WebDriverWait(driver, 15).until(lambda x: x.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[1]/div'))
+                WebDriverWait(driver, 15).until(lambda x: x.find_element_by_css_selector('.lzlu7c-17'))
                 print('Acessando: {}'.format(url[30:]))
                 time.sleep(2)
 
                 print('Iniciando!')
                 
-                texto = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[2]/p')
-                titulo = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/h1')
-                local = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[1]')
-                data_hora = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[1]/li[3]')
-                status = driver.find_element_by_xpath('/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[2]/div/span/img')
+                texto = driver.find_element_by_css_selector('.lzlu7c-17')
+                titulo = driver.find_element_by_css_selector('.lzlu7c-3')
+                local = driver.find_element_by_css_selector('div.lzlu7c-6:nth-child(1) > span:nth-child(2)')
+                data_hora = driver.find_element_by_css_selector('div.lzlu7c-6:nth-child(2) > span:nth-child(2)')
+                status = driver.find_element_by_css_selector('div.sc-1a60wwz-2:nth-child(1) > span:nth-child(2)')
 
                 try:
-                    categoria1 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[1]/a')
+                    categoria1 = driver.find_element_by_css_selector(
+                        '.lzlu7c-11 > ul:nth-child(1) > li:nth-child(1) > div:nth-child(1) > a:nth-child(1)')
                     problem_type = categoria1.text
                 except NoSuchElementException:
                     problem_type = '--'
 
                 try:
-                    categoria2 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[2]/a')
+                    categoria2 = driver.find_element_by_css_selector(
+                        '.lzlu7c-11 > ul:nth-child(1) > li:nth-child(2) > div:nth-child(1) > a:nth-child(1)')
                     product_type = categoria2.text
                 except NoSuchElementException:
                     product_type = '--'
 
                 try:
-                    categoria3 = driver.find_element_by_xpath(
-                        '/html/body/ui-view/div[3]/div/div[1]/div[2]/div/div[1]/div[2]/div[1]/ul[2]/li[3]/a')
+                    categoria3 = driver.find_element_by_css_selector(
+                        '.lzlu7c-11 > ul:nth-child(1) > li:nth-child(3) > div:nth-child(1) > a:nth-child(1)')
                     category = categoria3.text
                 except NoSuchElementException:
                     category = '--'
@@ -137,5 +135,5 @@ def scraper(driver, nome, id_page, conn, cursor):
                 conn.close()
                 break
     
-    print('Coleta concluida! Nome do arquivo: {}_detalhado'.format(nome))
+    print('Coleta concluida! Nome do arquivo: {}'.format(nome))
         

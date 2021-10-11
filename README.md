@@ -1,12 +1,12 @@
 # Reclame Aqui Scraper
-Scraper escrito em Python para o site Reclame Aqui, que permite coletar a url, a reclamação em si, o status, data e local.
+Scraper escrito em Python para o site Reclame Aqui, que permite coletar a URL, a reclamação em si, o status, data e local.
 
 ### Pré-requisitos
 
-Os requisistos são o Python na versão 3+ , Firefox ou Google Chrome em suas últimas versões, e instalar a biblioteca Selenium com o seguinte comando:
+Os requisistos são o Python na versão 3+ , Firefox ou Google Chrome em suas últimas versões, e instalar as bibliotecas Selenium e Webdriver Manager com o seguinte comando:
 
 ```bash
-$ pip install selenium
+$ pip install selenium webdriver-manager
 ```
 ### Modo de uso
 

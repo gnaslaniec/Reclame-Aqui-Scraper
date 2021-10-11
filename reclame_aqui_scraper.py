@@ -1,8 +1,6 @@
 from utils import driver_chrome, driver_firefox, arguments, db_conn
 from scraper import url_collector, scraper
 
-# FEITO POR GABRIEL NASLANIEC
-
 def main():
     args = arguments()
     browser = args.browser
@@ -10,7 +8,7 @@ def main():
         driver = driver_chrome()
     elif browser.lower() == 'f' or browser.lower() == 'firefox':
         driver = driver_firefox()
-    print('-- RECLAME AQUI SCRAPER --')
+    print('\n-- RECLAME AQUI SCRAPER --')
     
     file = args.file
     id_page = args.id

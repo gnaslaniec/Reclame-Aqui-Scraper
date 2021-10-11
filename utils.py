@@ -1,4 +1,6 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options
 
@@ -25,7 +27,7 @@ def driver_chrome():
     chrome_options = Options()
     chrome_options.headless = True
     # Inicializa o webdriver.
-    driver = webdriver.Chrome(options=chrome_options, executable_path="Drivers\\chromedriver.exe")
+    driver = webdriver.Chrome(options=chrome_options, executable_path=ChromeDriverManager().install())
 
     return driver
 
@@ -36,7 +38,7 @@ def driver_firefox():
     firefox_options = Options()
     firefox_options.headless = True
     # Inicializa o webdriver.
-    driver = webdriver.Firefox(options=firefox_options, executable_path="Drivers\\geckodriver.exe")
+    driver = webdriver.Firefox(options=firefox_options, executable_path=GeckoDriverManager().install())
 
     return driver
 
@@ -74,10 +76,10 @@ def gravador_bd(url_texto, url_id, conn, cursor):
 
 ''' Função para gravar os detalhes das reclamações em um arquivo CSV '''
 def gravador_csv(lista, nome):
-    with open('Arquivos\\{}.csv'.format(nome),
+    with open('Arquivos/{}.csv'.format(nome),
               'a', encoding='utf8', newline='') as arquivo_csv:
         gravador = csv.writer(arquivo_csv)
-        file_is_empty = os.stat('Arquivos\\{}.csv'.format(nome)).st_size == 0
+        file_is_empty = os.stat('Arquivos//{}.csv'.format(nome)).st_size == 0
         dados = ['titulo', 'texto', 'status', 'local', 'data',
                  'categoria_1', 'categoria_2', 'categoria_3',
                  'url_reclamacao']
