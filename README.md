@@ -21,5 +21,5 @@ $ python reclame_aqui_scraper.py -i <ID da página> -p <Quantidade de páginas> 
 
 -f --file     Nome do arquivo em que será gravado os dados das reclamações.
 
--b --browser  Browser em que será efetuado a coleta, (F) para Firefox ou (C) para Chrome.
+-b --browser  Browser em que será efetuado a coleta, (F) ou "firefox" para Firefox ou (C) ou "chrome" para Chrome.
 </pre>
