@@ -18,6 +18,7 @@ def arguments():
     parser.add_argument('-f', '--file', help='Nome do arquivo em que será salvo os dados da coleta', action='store', dest='file', required=True)
     parser.add_argument('-b', '--browser', help='Browser que será utilizado para a coleta, (F) para Firefox e (C) para Chrome', 
                         action='store', dest='browser', nargs='?', default="f")
+    parser.add_argument('-r', '--round', help='Arredonda a data e hora', action='store', dest='round')
     
     args = parser.parse_args()
 
@@ -62,18 +63,15 @@ def gravador_bd(url_texto, url_id, conn, cursor):
     with open('Arquivos/{}_log.txt'.format(url_id), 'a', encoding='utf8') as logfile:
         logfile.writelines('URL_ID:{}'.format(url_id))
     
-def gravador_csv(lista, nome):
+def gravador_csv(reclamacao, nome):
     with open('Arquivos/{}.csv'.format(nome),
               'a', encoding='utf8', newline='') as arquivo_csv:
-        gravador = csv.writer(arquivo_csv)
+        gravador = csv.DictWriter(arquivo_csv, fieldnames=constants.CSV_FILE_HEADERS)
         file_is_empty = os.stat('Arquivos//{}.csv'.format(nome)).st_size == 0
-        dados = ['titulo', 'texto', 'status', 'local', 'data',
-                 'categoria_1', 'categoria_2', 'categoria_3',
-                 'url_reclamacao']
         if file_is_empty:
-            gravador.writerow(dados)
-        for linha in lista:
-            gravador.writerow(linha)
+            gravador.writeheader()
+        gravador.writerow(reclamacao)
+        
 
 def arrendonda_hora(hora):
     """ VARIÁVEIS PARA TRATAMENTOS DO HORÁRIO! """
@@ -112,3 +110,7 @@ def arrendonda_hora(hora):
         print('Horário inválido!')
 
     return hora
+
+def format_url(url):
+    url_str = str(url)
+    return url_str.replace("(", "").replace(")", "").replace("'", "").replace(",", "")

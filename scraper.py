@@ -11,7 +11,8 @@ import datetime
 import logging
 logging.basicConfig(level = logging.INFO)
 
-from utils import gravador_csv, gravador_bd, arrendonda_hora
+from utils import gravador_csv, gravador_bd, format_url
+from Reclamacao import Reclamacao
 import constants
 
 def url_collector(driver, file, id_page, pages, conn, cursor):
@@ -56,60 +57,54 @@ def scraper(driver, nome, id_page, conn, cursor):
     cont = 1    
     for url in urls:
             try:
-                url_str = str(url)
-                url = url_str.replace("(", "").replace(")", "").replace("'", "").replace(",", "")
-                driver.get(url)
-                WebDriverWait(driver, 15).until(lambda x: x.find_element(By.CSS_SELECTOR,'.lzlu7c-17'))
-                logging.info('Acessando: {}'.format(url[30:]))
+                url_formated = format_url(url)
+                driver.get(url_formated)
+                WebDriverWait(driver, 15).until(lambda x: x.find_element(By.CSS_SELECTOR, constants.COMPLAIN_TEXT_SELECTOR))
+                logging.info('Acessando: {}'.format(url_formated[30:]))
                 time.sleep(2)
-
-                texto = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_TEXT_SELECTOR)
-                titulo = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_TITLE_SELECTOR)
-                local = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_LOCAL_SELECTOR)
-                data_hora = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_DATE_SELECTOR)
-                status = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_STATUS_SELECTOR)
-
+                
+                reclamacao = Reclamacao(
+                    url_formated,
+                    driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_TEXT_SELECTOR).text,
+                    driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_TITLE_SELECTOR).text,
+                    driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_LOCAL_SELECTOR).text,
+                    driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_DATE_SELECTOR).text,
+                    driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_STATUS_SELECTOR).text
+                )
+                
                 try:
                     categoria1 = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_CATEGORY_1_SELECTOR)
-                    problem_type = categoria1.text
+                    reclamacao.problem_type = categoria1.text
                 except NoSuchElementException:
-                    problem_type = '--'
+                    pass
 
                 try:
                     categoria2 = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_CATEGORY_2_SELECTOR)
-                    product_type = categoria2.text
+                    reclamacao.product_type = categoria2.text
                 except NoSuchElementException:
-                    product_type = '--'
+                    pass
 
                 try:
                     categoria3 = driver.find_element(By.CSS_SELECTOR, constants.COMPLAIN_CATEGORY_3_SELECTOR)
-                    category = categoria3.text
+                    reclamacao.category = categoria3.text
                 except NoSuchElementException:
-                    category = '--'
+                    pass
 
-                hora = data_hora.text
-                hora = arrendonda_hora(hora)
-
-                lista = zip([titulo.text], [texto.text],
-                            [status.text], [local.text],
-                            [hora], [problem_type],
-                            [product_type], [category], [url])
-
-                gravador_csv(lista, nome)
+                gravador_csv(reclamacao.to_dict(), nome)
 
                 logging.info('URL {} OK'.format(cont))
                 cont = cont + 1
-                cursor.execute(constants.SQL_STATUS_UPDATE.format('1'), (url,id_page))
+                cursor.execute(constants.SQL_STATUS_UPDATE.format('1'), (url_formated, id_page))
                 conn.commit()
                 with open('Arquivos/{}_log.txt'.format(id_page), 'a', encoding='utf8') as logfile:
-                    logfile.writelines('\n{} URL:{} OK'.format(datetime.datetime.now(), url))
+                    logfile.writelines('\n{} URL:{} OK'.format(datetime.datetime.now(), url_formated))
                 time.sleep(2)
             except TimeoutException as e:
                 logging.error('Não foi possível acessar a reclamação, indo para próxima...\n')
-                cursor.execute(constants.SQL_STATUS_UPDATE.format('3'), (url,id_page))
+                cursor.execute(constants.SQL_STATUS_UPDATE.format('3'), (url_formated,id_page))
                 conn.commit()
                 with open('Arquivos/{}_log.txt'.format(id_page), 'a', encoding='utf8') as logfile:
-                    logfile.writelines('\n{} URL:{} EXCEPTION {}'.format(datetime.datetime.now(), url, e))
+                    logfile.writelines('\n{} URL:{} EXCEPTION {}'.format(datetime.datetime.now(), url_formated, e))
                 pass
             except WebDriverException as web_driver_exception:
                 logging.error(web_driver_exception)
