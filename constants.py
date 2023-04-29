@@ -13,7 +13,10 @@ COMPLAIN_CATEGORY_3_SELECTOR = ".lzlu7c-11 > ul:nth-child(1) > li:nth-child(3) >
 
 SQL_SELECT_URL = "SELECT DISTINCT url FROM links where status in(0) and page_id in(?)"
 SQL_STATUS_UPDATE = "UPDATE links set status = {} where url = ? and page_id = ?;"
-SQL_CREATE_TABLE =  "CREATE TABLE IF NOT EXISTS links (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,url TEXT NOT NULL,status INTEGER NOT NULL,page_id TEXT NOT NULL);"
+SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS links (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,url TEXT NOT NULL,status INTEGER NOT NULL,page_id TEXT NOT NULL);"
 SQL_INSERT_LINK = "INSERT INTO links (url, status, page_id) VALUES (?, ?, ?);"
+SQL_SUCCESS_STATUS = "1"
+SQL_ERROR_STATUS = "3"
 
-CSV_FILE_HEADERS = ['url','titulo', 'texto', 'status', 'local', 'data_hora', 'problem_type', 'product_type', 'category']
+CSV_FILE_HEADERS = ['url', 'titulo', 'texto', 'status', 'local',
+                    'data_hora', 'problem_type', 'product_type', 'category']
