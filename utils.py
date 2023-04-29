@@ -44,7 +44,9 @@ def driver_firefox():
 def define_browser(argument):
     if (argument.lower() == "c" or argument.lower() == "chrome"):
         return driver_chrome()
-    return driver_firefox()
+    if (argument.lower() == "f" or argument.lower() == "firefox"):
+        return driver_chrome()
+    raise Exception("Invalid browser argument.")
 
 
 def gravador_csv(reclamacao, nome):
