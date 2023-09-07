@@ -3,3 +3,5 @@
 /geckodriver.log
 /Arquivos
 /venv
+/.vscode
+.DS_Store

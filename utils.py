@@ -45,7 +45,7 @@ def define_browser(argument):
     if (argument.lower() == "c" or argument.lower() == "chrome"):
         return driver_chrome()
     if (argument.lower() == "f" or argument.lower() == "firefox"):
-        return driver_chrome()
+        return driver_firefox()
     raise Exception("Invalid browser argument.")
 
 
