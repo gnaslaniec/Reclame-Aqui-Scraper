@@ -1,5 +1,5 @@
 class Reclamacao:
-    def __init__(self, url, texto, titulo, local, data_hora, status, problem_type='--', product_type='--', category='--'):
+    def __init__(self, url, texto, titulo, local, data_hora, status, problem_type, product_type, category):
         self.url = url
         self.texto = texto
         self.titulo = titulo

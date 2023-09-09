@@ -1,6 +1,7 @@
 from utils import define_browser, arguments
 from database import db_conn
-from scraper import url_collector, scraper
+from scraper import scraper
+from url_collector import url_collector
 
 
 def main():

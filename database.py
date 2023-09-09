@@ -13,7 +13,7 @@ def db_conn():
     return conn, cursor
 
 
-def gravador_bd(url_texto, url_id, conn, cursor):
+def db_writer(url_texto, url_id, conn, cursor):
     cursor.execute(constants.SQL_CREATE_TABLE)
 
     for link in url_texto:

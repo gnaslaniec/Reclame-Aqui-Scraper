@@ -49,15 +49,15 @@ def define_browser(argument):
     raise Exception("Invalid browser argument.")
 
 
-def gravador_csv(reclamacao, nome):
+def csv_writer(reclamacao, nome):
     with open('Arquivos/{}.csv'.format(nome),
               'a', encoding='utf8', newline='') as arquivo_csv:
-        gravador = csv.DictWriter(
+        writer = csv.DictWriter(
             arquivo_csv, fieldnames=constants.CSV_FILE_HEADERS)
         file_is_empty = os.stat('Arquivos//{}.csv'.format(nome)).st_size == 0
         if file_is_empty:
-            gravador.writeheader()
-        gravador.writerow(reclamacao)
+            writer.writeheader()
+        writer.writerow(reclamacao)
 
 
 def format_url(url):
