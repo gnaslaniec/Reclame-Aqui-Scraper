@@ -16,7 +16,7 @@ def arguments():
     parser.add_argument('-i', '--id', help='Link ou ID da empresa no Reclame Aqui',
                         action='store', dest='id', required=True)
     parser.add_argument('-p', '--pages', help='Número de páginas para coletar',
-                        action='store', dest='pages', required=True)
+                        action='store', dest='pages', required=True, type=int)
     parser.add_argument('-f', '--file', help='Nome do arquivo em que será salvo os dados da coleta',
                         action='store', dest='file', required=True)
     parser.add_argument('-b', '--browser', help='Browser que será utilizado para a coleta, (F) para Firefox e (C) para Chrome',

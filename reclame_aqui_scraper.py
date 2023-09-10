@@ -9,6 +9,7 @@ def main():
     driver = define_browser(args.browser)
     print('\n-- RECLAME AQUI SCRAPER --')
     conn, cursor = db_conn()
+    args.pages = 50 if args.pages > 50 else args.pages
     coletor = url_collector(driver, args.file, args.id,
                             args.pages, conn, cursor)
     scraper(driver, coletor, args.id, conn, cursor)
