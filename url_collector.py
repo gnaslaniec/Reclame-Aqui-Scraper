@@ -13,7 +13,7 @@ def url_collector(driver, file, id_page, pages, conn, cursor):
     if log_file_exists(id_page):
         logger.info(
             'Já foram coletados os link para o ID: {}'.format(id_page))
-        pass
+        return file
     else:
         logger.info("ID: {}".format(file))
 
@@ -37,7 +37,6 @@ def url_collector(driver, file, id_page, pages, conn, cursor):
             cont = cont + 1
         db_writer(lista_urls, id_page, conn, cursor)
         logger.info('Coleta de URLs concluída para o ID: {}'.format(file))
-
     return file
 
 

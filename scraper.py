@@ -2,7 +2,7 @@ import constants
 from Reclamacao import Reclamacao
 from database import update_status
 from utils import csv_writer, format_url
-from logger import logger, write_log_file, write_log_file_error
+from logger import logger, write_log_file
 from selenium.common.exceptions import NoSuchElementException, WebDriverException, TimeoutException
 from selenium.webdriver.common.by import By
 
@@ -34,7 +34,7 @@ def scraper(driver, nome, id_page, conn, cursor):
                 logger.error(
                     'Não foi possível acessar a reclamação, indo para próxima...\n')
                 update_status(cursor, constants.SQL_ERROR_STATUS, url, id_page)
-                write_log_file_error(id_page, url, e)
+                write_log_file(id_page, url, 'EXCEPTION', e)
             except WebDriverException as web_driver_exception:
                 logger.error(web_driver_exception)
                 raise

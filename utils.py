@@ -36,8 +36,8 @@ def driver_chrome():
 def driver_firefox():
     firefox_options = Options()
     firefox_options.headless = True
-    driver = webdriver.Firefox(options=firefox_options, executable_path=GeckoDriverManager()
-                               .install(), service_log_path=None)
+    driver = webdriver.Firefox(options=firefox_options, executable_path=GeckoDriverManager(
+    ).install(), service_log_path=None)
     return driver
 
 
