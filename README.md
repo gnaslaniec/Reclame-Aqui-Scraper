@@ -9,16 +9,16 @@ Antes de usar este projeto, certifique-se de atender aos seguintes pré-requisit
 
 - Python 3 ou versão posterior.
 - Firefox ou Google Chrome em suas últimas versões.
-- As bibliotecas Selenium e Webdriver Manager, que podem ser instaladas com o seguinte comando:
+- As bibliotecas Selenium e Webdriver Manager.
 
 ```bash
-$ pip install selenium webdriver-manager
+$ pip install -r requirements.txt
 ```
 
 ### Modo de uso
 
 ```bash
-$ python reclame_aqui_scraper.py -i <ID da página> -p <Quantidade de páginas> -f <Nome do arquivo com os dados da coleta> -b <Browser para efetuar a coleta>
+$ python reclame_aqui_scraper.py -i <ID da página> -p <Quantidade de páginas> -f <Nome do arquivo CSV com os dados da coleta> -b <Browser para efetuar a coleta>
 ```
 
 ### Argumentos
@@ -27,7 +27,7 @@ $ python reclame_aqui_scraper.py -i <ID da página> -p <Quantidade de páginas> 
 
 -p --pages  Número de páginas das quais serão coletadas as reclamações (por exemplo, '10' para coletar reclamações das 10 primeiras páginas).
 
--f --file  Nome do arquivo no qual os dados das reclamações serão gravados.
+-f --file  Nome do arquivo CSV no qual os dados das reclamações serão gravados.
 
 -b --browser  Browser a ser utilizado para a coleta, use "F" ou "firefox" para Firefox, ou "C" ou "chrome" para Chrome.
 </pre>
