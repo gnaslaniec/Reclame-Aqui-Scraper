@@ -2,7 +2,9 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 
 import csv
 import os
@@ -28,16 +30,19 @@ def arguments():
 def driver_chrome():
     chrome_options = Options()
     chrome_options.headless = True
-    driver = webdriver.Chrome(options=chrome_options, executable_path=ChromeDriverManager(
-    ).install(), service_log_path=None)
+    service =Service(executable_path=GeckoDriverManager(
+    ).install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
 
 def driver_firefox():
     firefox_options = Options()
     firefox_options.headless = True
-    driver = webdriver.Firefox(options=firefox_options, executable_path=GeckoDriverManager(
-    ).install(), service_log_path=None)
+    # service = Service(executable_path='./chromedriver.exe')
+    service = Service(executable_path=GeckoDriverManager(
+    ).install())
+    driver = webdriver.Firefox(service=service, options=firefox_options)
     return driver
 
 
